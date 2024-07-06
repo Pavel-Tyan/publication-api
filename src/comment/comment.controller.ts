@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post }
 import { CommentModel } from './comment.model';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentService } from './comment.service';
-import { REVIEW_NOT_FOUND } from './comment.constants';
+import { COMMENT_NOT_FOUND } from './comment.constants';
 
 @Controller('comment')
 export class CommentController {
@@ -13,9 +13,9 @@ export class CommentController {
         return this.commentService.create(dto);
     }
 
-    @Get('byPublication/:publicationId')
-    async getByPublication(): Promise<CommentModel[]> {
-        return this.commentService.findByPublicationId('publicationId');
+    @Get('byPublication/:id')
+    async getByPublication(@Param('id') id: string): Promise<CommentModel[]> {
+        return this.commentService.findByPublicationId(id);
     }
 
     @Delete(':id')
@@ -23,7 +23,7 @@ export class CommentController {
         const deletedDoc = await this.commentService.delete(id);
 
         if (!deletedDoc) {
-            throw new HttpException(REVIEW_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw new HttpException(COMMENT_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 }
