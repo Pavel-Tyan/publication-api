@@ -7,6 +7,7 @@ import {
     HttpStatus,
     Param,
     Post,
+    UseGuards,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { CommentModel } from './comment.model';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentService } from './comment.service';
 import { COMMENT_NOT_FOUND } from './comment.constants';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('comment')
 export class CommentController {
@@ -25,6 +27,7 @@ export class CommentController {
         return this.commentService.create(dto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get('byPublication/:id')
     async getByPublication(@Param('id') id: string): Promise<CommentModel[]> {
         return this.commentService.findByPublicationId(id);
