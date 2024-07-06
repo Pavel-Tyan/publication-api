@@ -1,11 +1,11 @@
-import { IsString } from 'class-validator';
+import { IsString, IsEmail } from 'class-validator';
 
 export class UserDto {
     @IsString()
     name: string;
     @IsString()
     surname: string;
-    @IsString()
+    @IsEmail({}, { message: 'Некорректная почта' })
     email: string;
     @IsString()
     password: string;
