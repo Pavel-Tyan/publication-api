@@ -51,4 +51,8 @@ export class AuthService {
             access_token: await this.jwtService.signAsync(payload),
         };
     }
+
+    async delete(email: string): Promise<UserModel> | null {
+        return this.userModel.findOneAndDelete({ email }).exec();
+    }
 }
