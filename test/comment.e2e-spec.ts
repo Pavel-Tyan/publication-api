@@ -44,6 +44,13 @@ describe('CommentController (e2e)', () => {
             });
     });
 
+    it('/comment/create (POST) - fail', async () => {
+        return request(app.getHttpServer())
+            .post('/comment/create')
+            .send({ ...testDto, userId: true })
+            .expect(400);
+    });
+
     it('/comment/byPublication/:id (GET) - success', async () => {
         return request(app.getHttpServer())
             .get('/comment/byPublication/' + publicationId)
