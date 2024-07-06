@@ -1,7 +1,8 @@
 import { BadRequestException, Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
-import { UserDto } from './dto/user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { ALREADY_REGISTERED_ERROR } from './auth.constants';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -9,7 +10,7 @@ export class AuthController {
 
     @UsePipes(new ValidationPipe())
     @Post('register')
-    async register(@Body() dto: UserDto) {
+    async register(@Body() dto: CreateUserDto) {
         const oldUser = await this.authService.findUser(dto.email);
 
         if (oldUser) {
@@ -19,7 +20,11 @@ export class AuthController {
         return this.authService.createUser(dto);
     }
 
+    @UsePipes(new ValidationPipe())
     @HttpCode(200)
     @Post('login')
-    async login(@Body() dto: UserDto) {}
+    async login(@Body() { email, password }: LoginUserDto) {
+        const user = await this.authService.validateUser(email, password);
+        return this.authService.login(user.email);
+    }
 }
