@@ -5,7 +5,7 @@ import { UserModel, UserModelSchema } from './user.model';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getJwtConfig } from 'src/config/jwt.config';
+import { getJwtConfig } from '../config/jwt.config';
 
 @Module({
     controllers: [AuthController],
