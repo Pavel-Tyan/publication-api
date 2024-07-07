@@ -25,10 +25,8 @@
 ## Run with Docker
 
 ```bash
-# unit tests
 $ docker build -t post-api .
 
-# e2e tests
 $ docker-compose up -d
 ```
 
