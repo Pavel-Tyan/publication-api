@@ -55,4 +55,9 @@ export class AuthService {
     async delete(email: string): Promise<UserModel> | null {
         return this.userModel.findOneAndDelete({ email }).exec();
     }
+
+    async getUser(jwt: string): Promise<UserModel> {
+        const email = this.jwtService.decode(jwt).email;
+        return await this.userModel.findOne({ email });
+    }
 }
