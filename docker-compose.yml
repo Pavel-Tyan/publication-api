@@ -1,5 +1,13 @@
 version: '3'
 services:
+    post.api:
+        image: post-api:latest
+        container_name: post-api
+        restart: always
+        ports:
+            - 3000:3000
+        volumes:
+            - ./.env:/opt/app-dir/.env
     mongo:
         image: mongo:4.4.4
         container_name: mongo
