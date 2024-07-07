@@ -30,6 +30,10 @@ $ docker build -t post-api .
 $ docker-compose up -d
 ```
 
+## Swagger
+
+Open http://localhost:3000/docs
+
 ## Test
 
 ```bash
