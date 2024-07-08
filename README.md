@@ -30,9 +30,19 @@ $ docker build -t post-api .
 $ docker-compose up -d
 ```
 
-## Swagger
+## Run without Docker
 
-Open http://localhost:3000/docs
+To run app itself without docker, you need to change field MONGO_HOST from 'mongo' to 127.0.0.1 in .env file and run only database container in docker-compose file. You also need this, if you want run tests.
+
+if you want to run both through docker, change MONGO_HOST to 'mongo'
+
+```bash
+# install dependencies
+$ npm install
+
+# run app
+$ npm run start
+```
 
 ## Test
 
@@ -46,3 +56,7 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Swagger
+
+Open http://localhost:3000/docs
