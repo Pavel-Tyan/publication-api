@@ -11,6 +11,7 @@ async function bootstrap() {
         .setDescription('The post API description')
         .setVersion('1.0')
         .addTag('post-app')
+        .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);
