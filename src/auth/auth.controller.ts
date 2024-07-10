@@ -7,8 +7,11 @@ import {
     HttpCode,
     HttpException,
     HttpStatus,
+    NotFoundException,
     Param,
+    Patch,
     Post,
+    UseGuards,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
@@ -17,7 +20,8 @@ import { AuthService } from './auth.service';
 import { ALREADY_REGISTERED_ERROR, USER_NOT_FOUND_ERROR } from './auth.constants';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserModel } from './user.model';
-import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -53,6 +57,20 @@ export class AuthController {
     }> {
         const user = await this.authService.validateUser(email, password);
         return this.authService.login(user.email);
+    }
+
+    @Patch(':id')
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Updates a user with specified id' })
+    @ApiParam({ name: 'id', required: true, description: 'User identifier' })
+    @UseGuards(JwtAuthGuard)
+    @UsePipes(new ValidationPipe())
+    async patch(@Param('id') id: string, @Body() dto: CreateUserDto): Promise<void> {
+        const updatedUser = await this.authService.updateById(id, dto);
+
+        if (!updatedUser) {
+            throw new NotFoundException(USER_NOT_FOUND_ERROR);
+        }
     }
 
     @Delete(':email')

@@ -56,6 +56,10 @@ export class AuthService {
         return this.userModel.findOneAndDelete({ email }).exec();
     }
 
+    async updateById(id: string, dto: CreateUserDto): Promise<UserModel> {
+        return this.userModel.findByIdAndUpdate(id, dto, { new: true }).exec();
+    }
+
     async getUser(jwt: string): Promise<UserModel> {
         const email = this.jwtService.decode(jwt).email;
         return await this.userModel.findOne({ email });
