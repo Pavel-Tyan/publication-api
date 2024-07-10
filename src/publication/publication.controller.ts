@@ -18,7 +18,7 @@ import { PublicationService } from './publication.service';
 import { CreatePublicationDto } from './dto/create-publication.dto';
 import { PUBLICATION_NOT_FOUND_ERROR } from './publication.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Publications')
 @Controller('publication')
@@ -26,6 +26,7 @@ export class PublicationController {
     constructor(private readonly publicationService: PublicationService) {}
 
     @Post('create')
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Post a new publication' })
     @ApiParam({ name: 'noteId', required: true, description: 'Note identifier' })
     @UseGuards(JwtAuthGuard)
@@ -35,6 +36,7 @@ export class PublicationController {
     }
 
     @Patch(':id')
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Updates a publication with specified id' })
     @ApiParam({ name: 'id', required: true, description: 'Publication identifier' })
     @UseGuards(JwtAuthGuard)
@@ -48,6 +50,7 @@ export class PublicationController {
     }
 
     @Delete(':id')
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Deletes a publication with specified id' })
     @ApiParam({ name: 'id', required: true, description: 'Publication identifier' })
     @UseGuards(JwtAuthGuard)
@@ -60,6 +63,7 @@ export class PublicationController {
     }
 
     @Get('findAll')
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Gets all publications' })
     @UseGuards(JwtAuthGuard)
     async findAll(): Promise<PublicationModel[]> {
@@ -67,6 +71,7 @@ export class PublicationController {
     }
 
     @Get('findByUserId/:id')
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Gets all publications with specified id' })
     @ApiParam({ name: 'id', required: true, description: 'User identifier' })
     @UseGuards(JwtAuthGuard)
