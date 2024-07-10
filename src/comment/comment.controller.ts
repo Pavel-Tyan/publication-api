@@ -16,7 +16,7 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentService } from './comment.service';
 import { COMMENT_NOT_FOUND } from './comment.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Comments')
 @Controller('comment')
@@ -24,6 +24,7 @@ export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
     @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @UsePipes(new ValidationPipe())
     @Post('create')
     @ApiOperation({ summary: 'Create a new comment' })
@@ -32,6 +33,7 @@ export class CommentController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @Get('byPublication/:id')
     @ApiOperation({ summary: 'Get comments by specified identifier of publication' })
     @ApiParam({ name: 'id', required: true, description: 'Specified identifier of publication' })
@@ -40,6 +42,7 @@ export class CommentController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @Delete(':id')
     @ApiOperation({ summary: 'Delete comments by specified identifier' })
     @ApiParam({ name: 'id', required: true, description: 'Specified identifier of comment' })
