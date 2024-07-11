@@ -57,7 +57,15 @@ export class AuthService {
     }
 
     async updateById(id: string, dto: CreateUserDto): Promise<UserModel> {
-        return this.userModel.findByIdAndUpdate(id, dto, { new: true }).exec();
+        const salt = genSaltSync(10);
+        const updatedUser = new this.userModel({
+            email: dto.email,
+            name: dto.name,
+            surname: dto.surname,
+            passwordHash: hashSync(dto.password, salt),
+        });
+
+        return this.userModel.findByIdAndUpdate(id, updatedUser, { new: true }).exec();
     }
 
     async getUser(jwt: string): Promise<UserModel> {
