@@ -28,7 +28,6 @@ export class PublicationController {
     @Post('create')
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Post a new publication' })
-    @ApiParam({ name: 'noteId', required: true, description: 'Note identifier' })
     @UseGuards(JwtAuthGuard)
     @UsePipes(new ValidationPipe())
     async create(@Body() dto: CreatePublicationDto): Promise<PublicationModel> {
