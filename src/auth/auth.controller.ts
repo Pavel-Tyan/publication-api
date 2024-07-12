@@ -38,7 +38,7 @@ export class AuthController {
     @Get('byId/:id')
     @ApiOperation({ summary: 'Get user by id' })
     @ApiParam({ name: 'id', required: true, description: 'user id' })
-    async getUserById(@Param(':id') id: string): Promise<UserModel> {
+    async getUserById(@Param('id') id: string): Promise<UserModel> {
         return this.authService.findUserById(id);
     }
 
