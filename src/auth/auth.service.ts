@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     async findUserById(id: string): Promise<UserModel> {
-        return this.userModel.findById({ id }).exec();
+        return this.userModel.findById(id).exec();
     }
 
     async validateUser(email: string, password: string): Promise<Pick<UserModel, 'email'>> {
