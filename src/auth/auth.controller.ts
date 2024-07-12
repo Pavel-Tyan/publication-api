@@ -35,6 +35,13 @@ export class AuthController {
         return this.authService.getUser(token);
     }
 
+    @Get('byId/:id')
+    @ApiOperation({ summary: 'Get user by id' })
+    @ApiParam({ name: 'id', required: true, description: 'user id' })
+    async getUserById(@Param(':id') id: string): Promise<UserModel> {
+        return this.authService.findUserById(id);
+    }
+
     @UsePipes(new ValidationPipe())
     @Post('register')
     @ApiOperation({ summary: 'Register a new user' })
